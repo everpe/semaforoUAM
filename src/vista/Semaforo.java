@@ -63,7 +63,7 @@ public class Semaforo
     
     public void destinarTiempo()
     {
-        Hilo hilo = new Hilo(verde, amarillo);
+        Hilo hilo = new Hilo(verde, amarillo, rojo);
         hilo.run();
         
     }
