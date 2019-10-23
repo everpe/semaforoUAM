@@ -1,17 +1,30 @@
 package vista;
 
+import cliente.Cliente;
 /**
  *
  * @author YOGA 500
  */
 public class VentanaSemaforo extends javax.swing.JFrame 
-{
+{    
+    private String ipSemaforo;
+    private Semaforo semaforo;
+    //Cliente cliente;
     /**
      * Creates new form ejecutable
      */
-    public VentanaSemaforo() {
+    public VentanaSemaforo(String ipSemaforo) 
+    {
+        this.ipSemaforo = ipSemaforo;
         initComponents();
+        semaforo = new Semaforo(rojo,amarillo,verde,txtTiempo, 
+                                            this.lblColor, this.ipSemaforo);
+//        cliente = new Cliente("224.111.112.113");
+//        cliente.unirseGrupo();
         this.setLocationRelativeTo(null);
+        //Semaforo semaforo = new Semaforo(rojo,amarillo,verde,txtTiempo, this.lblColor);
+        //Sistema sistema = new Sistema(semaforo);
+        //semaforo.start();
     }
 
     /**
@@ -35,6 +48,24 @@ public class VentanaSemaforo extends javax.swing.JFrame
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
+
+        rojo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rojoActionPerformed(evt);
+            }
+        });
+
+        amarillo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                amarilloActionPerformed(evt);
+            }
+        });
+
+        verde.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                verdeActionPerformed(evt);
+            }
+        });
 
         btnActivar.setBackground(new java.awt.Color(204, 204, 204));
         btnActivar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -123,47 +154,28 @@ public class VentanaSemaforo extends javax.swing.JFrame
 
     private void btnActivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActivarActionPerformed
         
-        this.txtTiempo.setText("0");
-        Semaforo objeto = new Semaforo(rojo,amarillo,verde,txtTiempo, this.lblColor);
-        objeto.start();
-   
+        //this.txtTiempo.setText("0");
+        
+        //Sistema sistema = new Sistema(semaforo);
+        semaforo.inicializar();
+        
+        new Thread(() -> {
+            this.semaforo.destinarTiempo();
+        }).start();
     }//GEN-LAST:event_btnActivarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VentanaSemaforo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VentanaSemaforo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VentanaSemaforo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VentanaSemaforo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
+    private void rojoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rojoActionPerformed
+        System.out.println("LA CANTIDAD DE IPS MIAS SON: " + this.semaforo.getIpsGrupo().size());
+    }//GEN-LAST:event_rojoActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new VentanaSemaforo().setVisible(true);
-            }
-        });
-    }
+    private void amarilloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_amarilloActionPerformed
+        System.out.println("EL ID DEL SEMAFORO ES: " + this.semaforo.getId());
+    }//GEN-LAST:event_amarilloActionPerformed
+
+    private void verdeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verdeActionPerformed
+        //this.semaforo.destinarTiempo();
+    }//GEN-LAST:event_verdeActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton amarillo;
