@@ -18,11 +18,13 @@ public class Hilo extends Thread
     private int cont = 0;
     JButton verde;
     JButton amarillo;
+    JButton rojo;
 
-    public Hilo(JButton verde, JButton amarillo) 
+    public Hilo(JButton verde, JButton amarillo, JButton rojo) 
     {
         this.verde = verde;
         this.amarillo = amarillo;
+        this.rojo = rojo;
     }
     
 
@@ -30,15 +32,26 @@ public class Hilo extends Thread
     public void run() 
     {
         this.verde.setBackground(Color.green);
-        for(int i=0; i < 30; i++)
+        for(int i=0; i < 1000000; i++)
         {
             cont ++;
             if(cont < 20)
                 this.verde.setBackground(Color.green);
             else
             {
-                this.verde.setBackground(Color.gray);
-                this.amarillo.setBackground(Color.yellow);
+                if(cont >= 20 && cont < 30)
+                {
+                    this.verde.setBackground(Color.gray);
+                    this.amarillo.setBackground(Color.yellow);
+                    this.rojo.setBackground(Color.gray);
+                }
+                else
+                {
+                    this.verde.setBackground(Color.gray);
+                    this.amarillo.setBackground(Color.gray);
+                    this.rojo.setBackground(Color.red);
+                }
+                
             }
                 
                 
