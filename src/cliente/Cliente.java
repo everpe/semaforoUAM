@@ -26,6 +26,8 @@ public class Cliente
     byte[] buffer;
     DatagramPacket packet;
     
+    private int cantidadIntegrantes ;
+    
     
     /**
      * Recibe la ip del grupo al que se va a conectar
@@ -54,7 +56,7 @@ public class Cliente
         try {
             socket.joinGroup(ipGroup);
            // this.recibir();
-            this.enviar("meuni," + ipPropia.getHostAddress());
+            this.enviar("meuni," + ipPropia.getHostAddress()+","+"p");
         } catch (IOException ex) {
             System.out.println("Error uniendose al grupo"+ex.getMessage());
             Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
@@ -84,6 +86,7 @@ public class Cliente
     public String recibir()
     {
         String recibido="";
+        String arreglo[];
         try {
             buffer= new byte[1000];
             packet = new DatagramPacket(buffer, buffer.length);
@@ -94,14 +97,24 @@ public class Cliente
             //System.out.println("Esta es la verdadera"+ipPropia);
             
             recibido = new String(packet.getData()).trim();
+            arreglo=recibido.split(",");
             //String rpta = protocolo.comprobarComunicacion("hi");
             System.out.println("Recibí:  "+recibido);
+            if(arreglo[0].equals("meuni"))
+            {
+                cantidadIntegrantes++;
+            }
         } catch (IOException ex) {
             System.out.println("Error recibiendo"+ex.getMessage());
             Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
         }
         return recibido;
     }
+
+    public int getCantidadIntegrantes() {
+        return cantidadIntegrantes;
+    }
+    
     /**
      * Permite realizar peticiones en el servidor.
      * @param msj Petición que se desea realizar.

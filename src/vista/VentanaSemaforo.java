@@ -18,13 +18,21 @@ public class VentanaSemaforo extends javax.swing.JFrame
         this.ipSemaforo = ipSemaforo;
         initComponents();
         semaforo = new Semaforo(rojo,amarillo,verde,txtTiempo, 
-                                            this.lblColor, this.ipSemaforo);
-//        cliente = new Cliente("224.111.112.113");
-//        cliente.unirseGrupo();
+                                this.lblColor, this.ipSemaforo);
+
         this.setLocationRelativeTo(null);
-        //Semaforo semaforo = new Semaforo(rojo,amarillo,verde,txtTiempo, this.lblColor);
-        //Sistema sistema = new Sistema(semaforo);
-        //semaforo.start();
+        
+        //Coloca a recibir() el semaforo infinitamente y le asigna el ID.
+        semaforo.inicializar();
+        
+         new Thread(() -> {
+            for(;;)
+            {
+                txtTiempo.setText(this.semaforo.getId()+"");
+            }
+        }).start(); 
+ 
+ 
     }
 
     /**
@@ -153,19 +161,49 @@ public class VentanaSemaforo extends javax.swing.JFrame
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnActivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActivarActionPerformed
+         
         
-        //this.txtTiempo.setText("0");
-        
-        //Sistema sistema = new Sistema(semaforo);
-        semaforo.inicializar();
+        //Activa el contador y los colores
+        //Pone el primero Verde el siguiente Amarillo
+        new Thread(() -> {
+            if(this.semaforo.getId()==1)
+            {
+                this.semaforo.getCliente().enviar("yoVerde,"+"yoVerde,"+this.semaforo.getId());
+            }
+            
+        }).start();
         
         new Thread(() -> {
-            this.semaforo.destinarTiempo();
+            //int ultimo=semaforo.getIpsGrupo().size();
+            //System.out.println("tamanoooooooooooooooooo: "+ultimo);
+            int siguiente=this.semaforo.getId()+1;
+             if(this.semaforo.getId()==1)
+            {
+                //7ultimo=3;
+                this.semaforo.getCliente().enviar("yoVerde,"+"tuAmarillo,"+siguiente+"");
+//                if(siguiente>=ultimo)
+//                {
+//                    this.semaforo.getCliente().enviar("yoVerde,"+"tuAmarillo,"+1);
+//                }
+              
+            }
         }).start();
+        //Los pone todos Rojos
+        new Thread(() -> {
+            int siguiente=this.semaforo.getId()+1;
+            this.semaforo.getCliente().enviar("Rojo,"+"Rojo,"+siguiente);
+        }).start();
+        
+        
+//        new Thread(() -> {
+//            int siguiente=this.semaforo.getId()+1;
+//            this.semaforo.getCliente().enviar("Rojo,"+"Rojo,"+siguiente);
+//        }).start();
     }//GEN-LAST:event_btnActivarActionPerformed
 
     private void rojoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rojoActionPerformed
         System.out.println("LA CANTIDAD DE IPS MIAS SON: " + this.semaforo.getIpsGrupo().size());
+        
     }//GEN-LAST:event_rojoActionPerformed
 
     private void amarilloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_amarilloActionPerformed

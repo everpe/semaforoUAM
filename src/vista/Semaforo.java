@@ -29,6 +29,7 @@ public class Semaforo
     private String ipPropia;
     
     private int cont;
+    private Hilo hilo;
     
     public Semaforo(JButton btnRojo,JButton btnAmarillo,JButton btnVerde,
                     JTextField txtTiempo, JLabel lblColor, String ipSemaforo)
@@ -46,6 +47,10 @@ public class Semaforo
         this.verde = btnVerde;
         this.txtTiempo = txtTiempo;  
         this.lblColor = lblColor;
+        
+        
+        hilo = new Hilo(verde, amarillo, rojo,32);
+        
 //        
 //        try 
 //        {
@@ -55,7 +60,9 @@ public class Semaforo
 //            System.out.println("Error convirtiendo el tiempo");
 //        }
         //this.start();
+       
     }    
+    
 
     public Cliente getCliente() {
         return cliente;
@@ -63,24 +70,22 @@ public class Semaforo
     
     public void destinarTiempo()
     {
-        Hilo hilo = new Hilo(verde, amarillo, rojo);
-        hilo.run();
+//        Hilo hilo = new Hilo(verde, amarillo, rojo,0);
+//        hilo.run();
         
     }
     
     
+    /**
+     * Metodo que RECIBE() y asigna Id.
+     */
     public void inicializar()
     {
         new Thread(() -> {
             while(true)
-            {            
-                //contador++;
-
-                //txtTiempo.setText(""+contador);
-
-                //String mensaje=JOptionPane.showInputDialog("Escriba El mensaje");
-               // cliente.enviar(mensaje);
+            {        
                 String msj = this.cliente.recibir();
+                String[]arreglo=msj.split(",");
                 String rpta = this.protocolo.comprobarComunicacion(msj, this.ipsGrupo);
                 String[] respondio = rpta.split(",");
                 if(respondio[0].equals("no"))
@@ -88,107 +93,69 @@ public class Semaforo
                     this.ipsGrupo.add(msj.split(",")[1]);
                     this.id = Integer.parseInt(respondio[1]);
                 }
-
-                System.out.println("LA RESPUESTTTAAAA: " + rpta);
+                System.out.println("en la 0: "+arreglo[0]+" en la 1: "+ arreglo[1]);
+                final String VAR=this.id+"";
+                
+                
+                if(arreglo[0].equals("yoVerde")&&arreglo[1].equals("tuAmarillo")&&
+                        arreglo[2].equals(VAR))
+                {
+//                    hilo.setCont(39);
+//                    hilo.run();
+                    //hilo.setEstado();
+                    hilo.amarilloVerde();
+                    int sig=id+1;
+                    this.cliente.enviar("yoVerde,"+"tuAmarillo,"+sig+"");
+                    this.cliente.enviar("yoVerde,"+"yoVerde,"+this.id);
+                    int a=6;
+                    if(sig>a)
+                    {
+                        this.cliente.enviar("yoVerde,"+"tuAmarillo,"+1);
+                        //this.cliente.enviar("yoVerde,"+"yoVerde,"+this.id);
+                        
+                    }
+                        
+                }
+                
+                
+                if(arreglo[0].equals("yoVerde")&&arreglo[1].equals("yoVerde")&&
+                        arreglo[2].equals(VAR))
+                {
+                    hilo.verdeaRojo();
+                   // hilo.amarilloVerde();
+//                    hilo.setCont(1);
+//                    hilo.run();
+                }
+                
+                int idSiguiente;
+                try {
+                    idSiguiente=Integer.parseInt(arreglo[2]);
+                } catch (Exception e) {
+                    idSiguiente = 9999;
+                }
+                
+                
+                if(arreglo[0].equals("Rojo")&&arreglo[1].equals("Rojo")&&this.id > idSiguiente)
+                {
+                    hilo.rojo();
+                }
+                System.out.println("arreglo [0]: "+arreglo[0]+"arreglo [1]: "+arreglo[1]);
             }            
         }).start();
         
     }
+
+    public Hilo getHilo() {
+        return hilo;
+    }
+    
     
 //    @Override
 //    public void run() 
 //    {         
 //        while(true)
 //        {            
-//            //contador++;
-//            
-//            //txtTiempo.setText(""+contador);
-//            
-//            //String mensaje=JOptionPane.showInputDialog("Escriba El mensaje");
-//           // cliente.enviar(mensaje);
-//            String msj = this.cliente.recibir();
-//            String rpta = this.protocolo.comprobarComunicacion(msj, this.ipsGrupo);
-//            String[] respondio = rpta.split(",");
-//            if(respondio[0].equals("no"))
-//            {
-//                this.ipsGrupo.add(msj.split(",")[1]);
-//                this.id = Integer.parseInt(respondio[1]);
-//            }
-//            
-//            System.out.println("LA RESPUESTTTAAAA: " + rpta);
-//            
-//            /*
-//            if(contador>=1 && contador<=60){
-//                temp++;
-//                txtTiempo.setText(""+temp);
-//            }
-//            if(contador==1){
-//                rojo.setBackground(Color.red);
-//                lblColor.setForeground(Color.red);
-//                lblColor.setText("ROJO");
-//                amarillo.setBackground(Color.gray);
-//                verde.setBackground(Color.gray);
-//            }
-//            
-//          
-//            if(contador>=60 && contador<=63){
-//                temp2++;
-//                txtTiempo.setText(""+temp2);
-//            }
-//            if(contador==60){
-//              rojo.setBackground(Color.gray);
-//              amarillo.setBackground(Color.yellow);
-//              lblColor.setForeground(Color.yellow);
-//              lblColor.setText("AMARILLO");
-//              verde.setBackground(Color.gray);  
-//            }
-//            
-//            
-//            if(contador>=63 && contador<=93){
-//                temp3++;
-//                txtTiempo.setText(""+temp3);
-//            }
-//            if(contador==63){
-//              rojo.setBackground(Color.gray);
-//              amarillo.setBackground(Color.gray);
-//              verde.setBackground(Color.green);  
-//              lblColor.setForeground(Color.green);
-//              lblColor.setText("VERDE");
-//            }
-//            
-//            
-//            if(contador>=93 && contador<=96){
-//                temp4++;
-//                txtTiempo.setText(""+temp4);
-//            }
-//            if(contador==93){
-//              rojo.setBackground(Color.gray);
-//              amarillo.setBackground(Color.yellow);
-//              lblColor.setForeground(Color.yellow);
-//              lblColor.setText("AMARILLO");
-//              verde.setBackground(Color.gray);   
-//            }
-//            
-//            
-//            if(contador==95){
-//                contador=0;
-//                temp=0;
-//                temp2=0;
-//                temp3=0;
-//                temp4=0;
-//            }*/
-//            
-////            try {
-////                sleep(1000);
-////            } catch (InterruptedException e) 
-////            {
-//                
-//          //  }
-//            
-//        }
-//        
-//    }
-    
+
 //    public void start() {
 //        new Thread(this).start();
 //    }  

@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
  *
  * @author ever
  */
-public class Semaforo {
+public class Main {
 
 //    /**
 //     * @param args the command line arguments
