@@ -1,6 +1,8 @@
 package vista;
 
 import cliente.Cliente;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author YOGA 500
@@ -9,7 +11,10 @@ public class VentanaSemaforo extends javax.swing.JFrame
 {    
     private String ipSemaforo;
     private Semaforo semaforo;
-    //Cliente cliente;
+    private Thread a= new Thread();
+    private Thread b=new Thread();
+    private Thread c=new Thread();
+    private boolean bandera=true;
     /**
      * Creates new form ejecutable
      */
@@ -86,21 +91,25 @@ public class VentanaSemaforo extends javax.swing.JFrame
             }
         });
 
-        btnActivar.setBackground(new java.awt.Color(204, 204, 204));
-        btnActivar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        btnActivar.setBackground(new java.awt.Color(46, 145, 169));
+        btnActivar.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        btnActivar.setForeground(new java.awt.Color(255, 255, 255));
         btnActivar.setText("Activar semaforo");
+        btnActivar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnActivar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnActivarActionPerformed(evt);
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Cambria", 0, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
         jLabel1.setText("Semáforo UAM");
 
-        lblEncabezado.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblEncabezado.setText("Tiempo Transcurrido En: ");
+        lblEncabezado.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblEncabezado.setText("Identificador");
 
+        txtTiempo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        txtTiempo.setForeground(new java.awt.Color(0, 0, 102));
         txtTiempo.setEnabled(false);
 
         lblColor.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -109,55 +118,53 @@ public class VentanaSemaforo extends javax.swing.JFrame
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(19, 19, 19))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(77, 77, 77)
-                        .addComponent(txtTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addComponent(btnActivar, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(32, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(74, 74, 74)
+                        .addComponent(lblColor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(42, 42, 42)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(rojo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(amarillo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(verde, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(69, 69, 69)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jSeparator1)
+                            .addComponent(lblEncabezado)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblEncabezado)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblColor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addContainerGap())))
+                                .addGap(10, 10, 10)
+                                .addComponent(txtTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(42, 42, 42)
+                        .addComponent(btnActivar, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(35, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(4, 4, 4)
-                        .addComponent(lblEncabezado, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(lblColor, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(lblColor, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblEncabezado, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(1, 1, 1)
                 .addComponent(txtTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnActivar)
                 .addGap(11, 11, 11)
                 .addComponent(rojo, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -172,43 +179,39 @@ public class VentanaSemaforo extends javax.swing.JFrame
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnActivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActivarActionPerformed
-         
+        //esto es`para saber la cantidad de integrantes del grupo.
         semaforo.getCliente().enviar("Mi,"+"id,"+this.semaforo.getId());
         System.out.println("El id:: "+this.semaforo.getId());
         //Activa el contador y los colores
-        //Pone el primero Verde el siguiente Amarillo
-        
+        //Pone el primero Verde para seguir la secuencia lògica.
         if(this.semaforo.getId()==1)
         {
-        
-        new Thread(() -> {
-            if(this.semaforo.getId()==1)
-            {
-                this.semaforo.getCliente().enviar("yoVerde,"+"yoVerde,"+this.semaforo.getId());
-                
-            }
-            
-        }).start();
-        
-        new Thread(() -> {
-            int siguiente=this.semaforo.getId()+1;
-             if(this.semaforo.getId()==1)
-            {
-                //7ultimo=3;
-                this.semaforo.getCliente().enviar("yoVerde,"+"tuAmarillo,"+siguiente+"");
-//                if(siguiente>=ultimo)
-//                {
-//                    this.semaforo.getCliente().enviar("yoVerde,"+"tuAmarillo,"+1);
-//                }
-            }
-        }).start();
-        //Los pone todos Rojos
-        new Thread(() -> {
-            int siguiente=this.semaforo.getId()+1;
-            this.semaforo.getCliente().enviar("Rojo,"+"Rojo,"+siguiente);
-        }).start();
-    this.disable();
+            a= new Thread(() -> {
+                if(this.semaforo.getId()==1)
+                {
+                    this.semaforo.getCliente().enviar("yoVerde,"+"yoVerde,"+this.semaforo.getId()); 
+                }
+            });a.start();
+
+            //Coloca en amarillo el siguiente y el actual sigue verde.
+           b= new Thread(() -> {
+                int siguiente=this.semaforo.getId()+1;
+                 if(this.semaforo.getId()==1)
+                {
+                    this.semaforo.getCliente().enviar("yoVerde,"+"tuAmarillo,"+siguiente+"");
+                }
+            });b.start();
+            //a.stop(); //Logger.getLogger(VentanaSemaforo.class.getName()).log(Level.SEVERE, null, ex);
+
+            //Los pone todos Rojos
+            c=  new Thread(() -> {
+                int siguiente=this.semaforo.getId()+1;
+                this.semaforo.getCliente().enviar("Rojo,"+"Rojo,"+siguiente);
+            });c.start();
+            btnActivar.setEnabled(false);
     }
+        btnActivar.setEnabled(false);
+        
         
         
         
@@ -221,23 +224,44 @@ public class VentanaSemaforo extends javax.swing.JFrame
     }//GEN-LAST:event_rojoActionPerformed
 
     private void amarilloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_amarilloActionPerformed
-        new Thread(() -> {
-            this.semaforo.getCliente().enviar("yoVerde,"+"yoVerde,"+this.semaforo.getId());
-        }).start();    
-        
-        System.out.println("EL ID DEL SEMAFORO ES: " + this.semaforo.getId());
+//        new Thread(() -> {
+//            this.semaforo.getCliente().enviar("yoVerde,"+"yoVerde,"+this.semaforo.getId());
+//        }).start();    
+//        
+//        System.out.println("EL ID DEL SEMAFORO ES: " + this.semaforo.getId());
     }//GEN-LAST:event_amarilloActionPerformed
 
     private void verdeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verdeActionPerformed
-//       new Thread(() -> {
-//            this.semaforo.getCliente().enviar("yoVerde,"+"yoVerde,"+this.semaforo.getId());
-//        }).start(); 
+//        try {
+//            this.semaforo.getCliente().enviar("fin,"+"fin,"+"fin");
+//            a.interrupt();b.interrupt();c.interrupt();
+//            System.out.println("jejejejj");
+//        } catch (Exception e) {
+//        }
+        
+        
 //        new Thread(() -> {
-//            this.semaforo.getCliente().enviar("yoVerde,"+"tuAmarillo,"+(this.semaforo.getId()+1));
-//        }).start(); 
-//        new Thread(() -> {
-//            this.semaforo.getCliente().enviar("Rojo,"+"Rojo,"+(this.semaforo.getId()+1));
-//        }).start(); 
+////                if(this.semaforo.getId()==1)
+////                {
+//                    this.semaforo.getCliente().enviar("yoVerde,"+"yoVerde,"+this.semaforo.getId()); 
+////                }
+//            }).start();
+//
+//            //Coloca en amarillo el siguiente y el actual sigue verde.
+//            new Thread(() -> {
+//                int siguiente=this.semaforo.getId()+1;
+//                 if(this.semaforo.getId()==1)
+//                {
+//                    this.semaforo.getCliente().enviar("yoVerde,"+"tuAmarillo,"+siguiente+"");
+//                }
+//            }).start();
+//            //a.stop(); //Logger.getLogger(VentanaSemaforo.class.getName()).log(Level.SEVERE, null, ex);
+//
+//            //Los pone todos Rojos
+//              new Thread(() -> {
+//                int siguiente=this.semaforo.getId()+1;
+//                this.semaforo.getCliente().enviar("Rojo,"+"Rojo,"+siguiente);
+//            }).start();
         
         
         

@@ -81,6 +81,7 @@ public class Semaforo
      */
     public void inicializar()
     {
+            
         new Thread(() -> {
             while(true)
             {        
@@ -96,14 +97,13 @@ public class Semaforo
 
                 final String VAR=this.id+"";
                 
-             if(arreglo[0].equals("Mi")&&arreglo[1].equals("id"))
-            {
-                //this.cliente.enviar("El,"+"Mio,"+this.id);
-                cont++;
-//                System.out.println("El CONT :::::::::::::::::"+cantidadIntegrantes);
-            }
+                if(arreglo[0].equals("Mi")&&arreglo[1].equals("id"))
+                {
+                    cont++;
+                }
+                
                 if(arreglo[0].equals("yoVerde")&&arreglo[1].equals("tuAmarillo")&&
-                        arreglo[2].equals(VAR))
+                    arreglo[2].equals(VAR))
                 {
                     hilo.amarilloVerde();
                     int sig=id+1;
@@ -117,26 +117,26 @@ public class Semaforo
                         this.cliente.enviar("yoVerde,"+"tuAmarillo,"+1); 
                     }
                 }
-                
+
                 if(arreglo[0].equals("yoVerde")&&arreglo[1].equals("yoVerde")&&
                         arreglo[2].equals(VAR))
                 {
                     hilo.verdeaRojo();
                 }
-                
+
                 int idSiguiente;
                 try {
                     idSiguiente=Integer.parseInt(arreglo[2]);
                 } catch (Exception e) {
                     idSiguiente = 9999;
                 }
-                
-                
+
+
                 if(arreglo[0].equals("Rojo")&&arreglo[1].equals("Rojo")&&this.id > idSiguiente)
                 {
                     hilo.rojo();
                 }
-                //System.out.println("arreglo [0]: "+arreglo[0]+"arreglo [1]: "+arreglo[1]);
+                
             }            
         }).start();
         

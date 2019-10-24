@@ -3,9 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/ever/Documents/NetBeansProjects/Semaforo/src/vista/VentanaSemaforo.java</file>
             <file>file:/C:/Users/ever/Documents/NetBeansProjects/Semaforo/src/cliente/Cliente.java</file>
             <file>file:/C:/Users/ever/Documents/NetBeansProjects/Semaforo/src/cliente/Hilo.java</file>
-            <file>file:/C:/Users/ever/Documents/NetBeansProjects/Semaforo/src/semaforo/Semaforo.java</file>
+            <file>file:/C:/Users/ever/Documents/NetBeansProjects/Semaforo/src/cliente/Protocolo.java</file>
+            <file>file:/C:/Users/ever/Documents/NetBeansProjects/Semaforo/src/vista/Semaforo.java</file>
+            <file>file:/C:/Users/ever/Documents/NetBeansProjects/Semaforo/src/vista/Main.java</file>
         </group>
     </open-files>
 </project-private>
