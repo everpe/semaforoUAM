@@ -94,7 +94,7 @@ public class Hilo extends Thread
                     this.rojo.setBackground(Color.red);
                 }
             }
-            System.out.println("El contador: " + cont);
+          //  System.out.println("El contador: " + cont);
             try {
                 Thread.sleep(1000);
             } catch (Exception e) {
@@ -127,7 +127,7 @@ public class Hilo extends Thread
                     this.verde.setBackground(Color.green);
                 }
             }
-            System.out.println("El contador: " + cont);
+            //System.out.println("El contador: " + cont);
             try {
                 Thread.sleep(1000);
             } catch (Exception e) {

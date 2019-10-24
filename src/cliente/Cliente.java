@@ -86,24 +86,16 @@ public class Cliente
     public String recibir()
     {
         String recibido="";
-        String arreglo[];
         try {
             buffer= new byte[1000];
             packet = new DatagramPacket(buffer, buffer.length);
             socket.receive(packet);
             packet.getAddress();
-            
-            //this.ipPropia = packet.getAddress();
-            //System.out.println("Esta es la verdadera"+ipPropia);
-            
+        
             recibido = new String(packet.getData()).trim();
-            arreglo=recibido.split(",");
-            //String rpta = protocolo.comprobarComunicacion("hi");
-            System.out.println("Recibí:  "+recibido);
-            if(arreglo[0].equals("meuni"))
-            {
-                cantidadIntegrantes++;
-            }
+//            
+            
+      
         } catch (IOException ex) {
             System.out.println("Error recibiendo"+ex.getMessage());
             Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);

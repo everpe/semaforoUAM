@@ -93,38 +93,35 @@ public class Semaforo
                     this.ipsGrupo.add(msj.split(",")[1]);
                     this.id = Integer.parseInt(respondio[1]);
                 }
-                System.out.println("en la 0: "+arreglo[0]+" en la 1: "+ arreglo[1]);
+
                 final String VAR=this.id+"";
                 
-                
+             if(arreglo[0].equals("Mi")&&arreglo[1].equals("id"))
+            {
+                //this.cliente.enviar("El,"+"Mio,"+this.id);
+                cont++;
+//                System.out.println("El CONT :::::::::::::::::"+cantidadIntegrantes);
+            }
                 if(arreglo[0].equals("yoVerde")&&arreglo[1].equals("tuAmarillo")&&
                         arreglo[2].equals(VAR))
                 {
-//                    hilo.setCont(39);
-//                    hilo.run();
-                    //hilo.setEstado();
                     hilo.amarilloVerde();
                     int sig=id+1;
+                    //int sig=id;
                     this.cliente.enviar("yoVerde,"+"tuAmarillo,"+sig+"");
                     this.cliente.enviar("yoVerde,"+"yoVerde,"+this.id);
-                    int a=6;
+                    int a=cont;
                     if(sig>a)
                     {
-                        this.cliente.enviar("yoVerde,"+"tuAmarillo,"+1);
-                        //this.cliente.enviar("yoVerde,"+"yoVerde,"+this.id);
-                        
+                        System.out.println("Contador quedó en: "+cont);
+                        this.cliente.enviar("yoVerde,"+"tuAmarillo,"+1); 
                     }
-                        
                 }
-                
                 
                 if(arreglo[0].equals("yoVerde")&&arreglo[1].equals("yoVerde")&&
                         arreglo[2].equals(VAR))
                 {
                     hilo.verdeaRojo();
-                   // hilo.amarilloVerde();
-//                    hilo.setCont(1);
-//                    hilo.run();
                 }
                 
                 int idSiguiente;
@@ -139,7 +136,7 @@ public class Semaforo
                 {
                     hilo.rojo();
                 }
-                System.out.println("arreglo [0]: "+arreglo[0]+"arreglo [1]: "+arreglo[1]);
+                //System.out.println("arreglo [0]: "+arreglo[0]+"arreglo [1]: "+arreglo[1]);
             }            
         }).start();
         
